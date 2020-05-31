@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">What\'s The Word</string>
+    <string name="login_screen">Login Screen</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="new_user">New User?</string>
+    <string name="login_button">Login</string>
+    <string name="skip_login">Skip Login</string>
+    <string name="search">Search</string>
+    <string name="logout">Logout</string>
+</resources>
