@@ -9,4 +9,9 @@
     <string name="search">Search</string>
     <string name="logout">Logout</string>
     <string name="exit">Exit</string>
+    <string name="new_user2">Enter a new username</string>
+    <string name="new_password">Enter a new password</string>
+    <string name="create_login">Create Login</string>
+    <string name="cancel">Cancel</string>
 </resources>
+

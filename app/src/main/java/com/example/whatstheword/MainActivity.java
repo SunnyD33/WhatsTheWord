@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity
     //TODO: Create function to have user create credentials
     private void newUserLogin()
     {
-
+        Intent intent = new Intent(MainActivity.this,NewUser.class);
+        startActivity(intent);
     }
 }
