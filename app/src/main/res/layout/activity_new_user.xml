@@ -65,7 +65,7 @@
         android:id="@+id/createLoginButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/roundedbutton"
         android:text="@string/create_login"
         app:layout_constraintEnd_toEndOf="parent"
