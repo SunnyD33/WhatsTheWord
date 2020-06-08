@@ -68,6 +68,7 @@
         android:layout_marginTop="28dp"
         android:background="@drawable/roundedbutton"
         android:text="@string/create_login"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
