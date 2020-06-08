@@ -38,7 +38,7 @@
         android:layout_marginTop="60dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/username"
+        android:hint="@string/username"
         android:drawableLeft="@drawable/ic_action_username"
         android:drawableStart="@drawable/ic_action_username"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,6 @@
         android:layout_marginTop="292dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="@string/password"
         android:hint="@string/password"
         android:drawableLeft="@drawable/ic_action_password"
         android:drawableStart="@drawable/ic_action_password"
@@ -72,7 +71,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/newPassword"
+        tools:ignore="PrivateResource" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -85,4 +85,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/newUserHeader"
+        android:layout_width="201dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="52dp"
+        android:gravity="center"
+        android:text="@string/new_user3"
+        android:textAlignment="center"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
