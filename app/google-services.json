@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "174046281870",
+    "firebase_url": "https://whatstheword-a7585.firebaseio.com",
+    "project_id": "whatstheword-a7585",
+    "storage_bucket": "whatstheword-a7585.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174046281870:android:b9a0f60cadba1ad52289df",
+        "android_client_info": {
+          "package_name": "com.example.whatstheword"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174046281870-qdcfllvaquidsjdjfbe97mm72qpdf1ce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrrhMBKc55paQPb5d_Fn_YCVB5qboXJEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174046281870-qdcfllvaquidsjdjfbe97mm72qpdf1ce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
