@@ -111,19 +111,6 @@ public class MainActivity extends AppCompatActivity
     {
         Intent intent = new Intent(MainActivity.this,NewUser.class);
         startActivity(intent);
-
-        String email = mEmail.getText().toString().trim();
-        String password = mPassword.getText().toString().trim();
-
-        if(TextUtils.isEmpty(email))
-        {
-            mEmail.setError("Email is required.");
-        }
-
-        if(TextUtils.isEmpty(password))
-        {
-            mPassword.setError("Password is required.");
-        }
     }
 
 }
