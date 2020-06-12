@@ -1,30 +1,29 @@
 package com.example.whatstheword;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Vector;
-
 public class MainActivity extends AppCompatActivity
 {
     //Private variables
-    private Button skipLoginButton;
-    private Button newUserButton;
-    private Button loginButton;
-    //private Vector<String> uNames = new Vector();
-    //private Vector<String> passwords = new Vector();
-    private EditText email;
-    private EditText password;
+    private Button mSkipLoginButton;
+    private Button mNewUserButton;
+    private Button mLoginButton;
+    private EditText mEmail;
+    private EditText mPassword;
     private FirebaseAuth mAuth;
+    private ProgressBar progressBar; //To be added
+    private static final String TAG = "EmailPassword";
 
 
     @Override
@@ -39,12 +38,12 @@ public class MainActivity extends AppCompatActivity
         //uNames.add("qlw");
         //passwords.add("1234");
 
-        email = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
+        mEmail = findViewById(R.id.email);
+        mPassword = findViewById(R.id.password);
 
         //TODO: create button for skipping login and going to the search menu
-        skipLoginButton = (Button) findViewById(R.id.skipLoginButton);
-        skipLoginButton.setOnClickListener(new View.OnClickListener()
+        mSkipLoginButton = findViewById(R.id.skipLoginButton);
+        mSkipLoginButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -54,19 +53,33 @@ public class MainActivity extends AppCompatActivity
         });
 
         //TODO: create button for a new user to create credentials for the application
-        newUserButton = (Button) findViewById(R.id.newUserButton);
-        newUserButton.setOnClickListener(new View.OnClickListener() {
+        mNewUserButton = findViewById(R.id.newUserButton);
+        mNewUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 newUserLogin();
             }
         });
 
         //TODO: create button for user to login with credentials
-        loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        mLoginButton = findViewById(R.id.loginButton);
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { login();
+            public void onClick(View v)
+            {
+                String email = mEmail.getText().toString().trim();
+                String password = mPassword.getText().toString().trim();
+
+                if(TextUtils.isEmpty(email))
+                {
+                    mEmail.setError("Email is required.");
+                }
+
+                if(TextUtils.isEmpty(password))
+                {
+                    mPassword.setError("Password is required.");
+                }
             }
         });
     }
@@ -77,6 +90,7 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
         //Check if user is signed in
         FirebaseUser user = mAuth.getCurrentUser();
+        //updateUI(user);
     }
 
     //TODO: Create function to have user login without credentials
@@ -97,5 +111,19 @@ public class MainActivity extends AppCompatActivity
     {
         Intent intent = new Intent(MainActivity.this,NewUser.class);
         startActivity(intent);
+
+        String email = mEmail.getText().toString().trim();
+        String password = mPassword.getText().toString().trim();
+
+        if(TextUtils.isEmpty(email))
+        {
+            mEmail.setError("Email is required.");
+        }
+
+        if(TextUtils.isEmpty(password))
+        {
+            mPassword.setError("Password is required.");
+        }
     }
+
 }
