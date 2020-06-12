@@ -32,13 +32,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/newUsername"
+        android:id="@+id/newEmail"
         android:layout_width="311dp"
         android:layout_height="50dp"
         android:layout_marginTop="60dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:drawableLeft="@drawable/ic_action_username"
         android:drawableStart="@drawable/ic_action_username"
         app:layout_constraintEnd_toEndOf="parent"

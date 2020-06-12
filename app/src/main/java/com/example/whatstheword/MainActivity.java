@@ -1,5 +1,6 @@
 package com.example.whatstheword;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,19 +9,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity
 {
+    //Private variables
     private Button skipLoginButton;
     private Button newUserButton;
     private Button loginButton;
-    private Vector<String> uNames = new Vector();
-    private Vector<String> passwords = new Vector();
-    private EditText user;
+    //private Vector<String> uNames = new Vector();
+    //private Vector<String> passwords = new Vector();
+    private EditText email;
     private EditText password;
-
-    public boolean loginStatus;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -29,10 +33,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        uNames.add("qlw");
-        passwords.add("1234");
+        //Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
-        user = (EditText) findViewById(R.id.username);
+        //uNames.add("qlw");
+        //passwords.add("1234");
+
+        email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
 
         //TODO: create button for skipping login and going to the search menu
@@ -64,66 +71,25 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        //Check if user is signed in
+        FirebaseUser user = mAuth.getCurrentUser();
+    }
+
     //TODO: Create function to have user login without credentials
     private void skipLogin()
     {
         Intent intent = new Intent(MainActivity.this, SearchScreen2.class);
         startActivity(intent);
-        loginStatus = false;
     }
 
     //TODO: Create function to have user login with credentials
     private void login()
     {
-        //TODO: check credentials vector before allowing to login
 
-        for(int i = 0; i < uNames.size(); i++)
-        {
-            if(user.getText().toString() == uNames.get(i).toString())
-            {
-                for (int j = 0; j < passwords.size(); j++)
-                {
-                    if(password.getText().toString() == passwords.get(i).toString())
-                    {
-                        Intent intent = new Intent(MainActivity.this, SearchScreen.class);
-                        startActivity(intent);
-                    }
-                }
-            }
-            else if(user.getText().toString() == uNames.get(i).toString())
-            {
-                for (int j = 0; j < passwords.size(); j++)
-                {
-                    if(password.getText().toString() != passwords.get(i).toString())
-                    {
-                        PasswordDialog passwordDialog = new PasswordDialog();
-                        passwordDialog.show(getSupportFragmentManager(), "Password Dialog");
-                    }
-                }
-            }
-            else if(user.getText().toString() != uNames.get(i).toString())
-            {
-                for (int j = 0; j < passwords.size(); j++)
-                {
-                    if(password.getText().toString() == passwords.get(i).toString())
-                    {
-                        UsernameDialog usernameDialog = new UsernameDialog();
-                        usernameDialog.show(getSupportFragmentManager(), "Username Dialog");
-                    }
-                }
-            }
-            else if(user.getText().toString() != uNames.get(i).toString())
-            {
-                for (int j = 0; j < passwords.size(); j++)
-                {
-                    if(password.getText().toString() != passwords.get(i).toString())
-                    {
-                        UsernamePasswordDialog upassDialog = new UsernamePasswordDialog();
-                        upassDialog.show(getSupportFragmentManager(), "Username/Password Dialog");
-                    }
-                }
-            }
-        }
     }
 
     //TODO: Create function to have user create credentials

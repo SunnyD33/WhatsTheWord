@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">What\'s The Word</string>
     <string name="login_screen">Login Screen</string>
-    <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="new_user">New User?</string>
     <string name="login_button">Login</string>
@@ -9,7 +9,7 @@
     <string name="search">Lookup</string>
     <string name="logout">Logout</string>
     <string name="exit">Exit</string>
-    <string name="new_user2">Enter your username</string>
+    <string name="new_user2">Enter your email</string>
     <string name="new_password">Enter your password</string>
     <string name="create_login">Create Login</string>
     <string name="cancel">Cancel</string>
