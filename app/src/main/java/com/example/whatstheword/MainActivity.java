@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity
     private EditText mPassword;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar; //To be added
-    private static final String TAG = "EmailPassword";
 
 
     @Override
@@ -35,9 +34,7 @@ public class MainActivity extends AppCompatActivity
         //Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        //uNames.add("qlw");
-        //passwords.add("1234");
-
+        //Set values for email and password from xml layouts
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
 
@@ -73,12 +70,12 @@ public class MainActivity extends AppCompatActivity
 
                 if(TextUtils.isEmpty(email))
                 {
-                    mEmail.setError("Email is required.");
+                    mEmail.setError("Email is required");
                 }
 
                 if(TextUtils.isEmpty(password))
                 {
-                    mPassword.setError("Password is required.");
+                    mPassword.setError("Password is required");
                 }
             }
         });
