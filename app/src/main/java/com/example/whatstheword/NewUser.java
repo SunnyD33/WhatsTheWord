@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class NewUser extends AppCompatActivity {
 
@@ -75,7 +76,7 @@ public class NewUser extends AppCompatActivity {
                     return;
                 }
 
-                if (password.length() < 6 && !TextUtils.isEmpty(password)) {
+                if (password.length() < 6) {
                     mPassword.setError("Password must be 6 or more characters");
                     return;
                 }
@@ -88,11 +89,14 @@ public class NewUser extends AppCompatActivity {
                             //Display message to user that login creation was successful
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
+                            FirebaseUser user = mAuth.getCurrentUser();
 
                             //Switch to search screen after successful login
                             Intent intent = new Intent(NewUser.this, SearchScreen.class);
                             startActivity(intent);
-                        } else {
+                        }
+                        else
+                        {
                             //Display error message indicating login was unsuccessful
                             Toast toast = Toast.makeText(context2, text2, duration);
                             toast.show();
@@ -102,6 +106,13 @@ public class NewUser extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Check if user is signed in
+        FirebaseUser user = mAuth.getCurrentUser();
     }
 
     private void CancelLoginCreate() {

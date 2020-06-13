@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         //Check if user is signed in
         FirebaseUser user = mAuth.getCurrentUser();
-        //updateUI(user);
     }
 
     //TODO: Create function to have user login without credentials
