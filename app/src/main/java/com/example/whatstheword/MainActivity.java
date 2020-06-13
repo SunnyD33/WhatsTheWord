@@ -19,8 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
     //Private variables
     private Button mSkipLoginButton;
     private Button mNewUserButton;
@@ -32,8 +31,7 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -55,11 +53,9 @@ public class MainActivity extends AppCompatActivity
 
         //TODO: create button for skipping login and going to the search menu
         mSkipLoginButton = findViewById(R.id.skipLoginButton);
-        mSkipLoginButton.setOnClickListener(new View.OnClickListener()
-        {
+        mSkipLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 skipLogin();
             }
         });
@@ -68,8 +64,7 @@ public class MainActivity extends AppCompatActivity
         mNewUserButton = findViewById(R.id.newUserButton);
         mNewUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 newUserLogin();
             }
         });
@@ -78,51 +73,46 @@ public class MainActivity extends AppCompatActivity
         mLoginButton = findViewById(R.id.loginButton);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email))
-                {
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is required");
                     return;
                 }
 
-                if(TextUtils.isEmpty(password))
-                {
+                if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
                     return;
                 }
 
                 //Sign in existing users
-                mAuth.signInWithEmailAndPassword(email,password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful())
-                                {
-                                    //Successful sign in
-                                    Toast toast = Toast.makeText(context,text,duration);
-                                    toast.show();
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(MainActivity.this,SearchScreen.class);
-                                    startActivity(intent);
-                                }
-                                else
-                                {
-                                    Toast toast = Toast.makeText(context2,text2,duration);
-                                    toast.show();
-                                }
-                            }
-                        });
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            //Successful sign in message
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            //Take user to search screen
+                            Intent intent = new Intent(MainActivity.this, SearchScreen.class);
+                            startActivity(intent);
+                        } else {
+                            //Unsuccessful login message
+                            Toast toast = Toast.makeText(context2, text2, duration);
+                            toast.show();
+                        }
+                    }
+                });
             }
         });
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
         //Check if user is signed in
         FirebaseUser user = mAuth.getCurrentUser();
@@ -130,16 +120,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     //TODO: Create function to have user login without credentials
-    private void skipLogin()
-    {
+    private void skipLogin() {
         Intent intent = new Intent(MainActivity.this, SearchScreen2.class);
         startActivity(intent);
     }
 
     //TODO: Create function to have user create credentials
-    private void newUserLogin()
-    {
-        Intent intent = new Intent(MainActivity.this,NewUser.class);
+    private void newUserLogin() {
+        Intent intent = new Intent(MainActivity.this, NewUser.class);
         startActivity(intent);
     }
 

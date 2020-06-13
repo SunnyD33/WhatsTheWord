@@ -59,60 +59,54 @@ public class NewUser extends AppCompatActivity {
 
         //TODO: create button for user to create new credentials
         mCreateLoginButton = findViewById(R.id.createLoginButton);
-        mCreateLoginButton.setOnClickListener(new View.OnClickListener()
-        {
+        mCreateLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email))
-                {
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is required");
                     return;
                 }
 
-                if(TextUtils.isEmpty(password))
-                {
+                if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
                     return;
                 }
 
-                if(password.length() < 6 && !TextUtils.isEmpty(password))
-                {
+                if (password.length() < 6 && !TextUtils.isEmpty(password)) {
                     mPassword.setError("Password must be 6 or more characters");
                     return;
                 }
 
                 //Register user via Firebase
-                mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
-                {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task)
-                            {
-                                if(task.isSuccessful())
-                                {
-                                    Toast toast = Toast.makeText(context,text,duration);
-                                    toast.show();
-                                    Intent intent = new Intent(NewUser.this,MainActivity.class);
-                                    startActivity(intent);
-                                }
-                                else
-                                {
-                                    Toast toast = Toast.makeText(context2,text2,duration);
-                                    toast.show();
-                                }
-                            }
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            //Display message to user that login creation was successful
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                            //Switch to search screen after successful login
+                            Intent intent = new Intent(NewUser.this, SearchScreen.class);
+                            startActivity(intent);
+                        } else {
+                            //Display error message indicating login was unsuccessful
+                            Toast toast = Toast.makeText(context2, text2, duration);
+                            toast.show();
+                        }
+                    }
                 });
             }
         });
 
     }
 
-    private void CancelLoginCreate()
-    {
-        Intent intent = new Intent(NewUser.this,MainActivity.class);
+    private void CancelLoginCreate() {
+        //Return user to login screen without creating credentials
+        Intent intent = new Intent(NewUser.this, MainActivity.class);
         startActivity(intent);
     }
 }
