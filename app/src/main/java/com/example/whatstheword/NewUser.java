@@ -39,12 +39,12 @@ public class NewUser extends AppCompatActivity {
         //Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        //Toast values for successful login
+        //Toast values for successful sign-up
         final Context context = getApplicationContext();
         final CharSequence text = "User Created!";
         final int duration = Toast.LENGTH_SHORT;
 
-        //Toast values for unsuccessful login
+        //Toast values for unsuccessful sing-up
         final Context context2 = getApplicationContext();
         final CharSequence text2 = "An Error Occurred..Please try again.";
 

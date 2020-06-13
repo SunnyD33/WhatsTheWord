@@ -1,5 +1,6 @@
 package com.example.whatstheword;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,9 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -37,6 +43,15 @@ public class MainActivity extends AppCompatActivity
         //Set values for email and password from xml layouts
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
+
+        //Toast values for successful login
+        final Context context = getApplicationContext();
+        final CharSequence text = "Signing in";
+        final int duration = Toast.LENGTH_SHORT;
+
+        //Toast values for unsuccessful login
+        final Context context2 = getApplicationContext();
+        final CharSequence text2 = "Authentication failed";
 
         //TODO: create button for skipping login and going to the search menu
         mSkipLoginButton = findViewById(R.id.skipLoginButton);
@@ -71,12 +86,36 @@ public class MainActivity extends AppCompatActivity
                 if(TextUtils.isEmpty(email))
                 {
                     mEmail.setError("Email is required");
+                    return;
                 }
 
                 if(TextUtils.isEmpty(password))
                 {
                     mPassword.setError("Password is required");
+                    return;
                 }
+
+                //Sign in existing users
+                mAuth.signInWithEmailAndPassword(email,password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful())
+                                {
+                                    //Successful sign in
+                                    Toast toast = Toast.makeText(context,text,duration);
+                                    toast.show();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Intent intent = new Intent(MainActivity.this,SearchScreen.class);
+                                    startActivity(intent);
+                                }
+                                else
+                                {
+                                    Toast toast = Toast.makeText(context2,text2,duration);
+                                    toast.show();
+                                }
+                            }
+                        });
             }
         });
     }
@@ -95,12 +134,6 @@ public class MainActivity extends AppCompatActivity
     {
         Intent intent = new Intent(MainActivity.this, SearchScreen2.class);
         startActivity(intent);
-    }
-
-    //TODO: Create function to have user login with credentials
-    private void login()
-    {
-
     }
 
     //TODO: Create function to have user create credentials
