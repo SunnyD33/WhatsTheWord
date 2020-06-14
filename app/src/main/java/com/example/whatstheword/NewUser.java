@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewUser extends AppCompatActivity {
 
@@ -25,6 +30,8 @@ public class NewUser extends AppCompatActivity {
     private Button mCreateLoginButton;
     private EditText mEmail;
     private EditText mPassword;
+    private EditText mFirstName;
+    private EditText mLastName;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar; //To be added
 
@@ -33,9 +40,11 @@ public class NewUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
 
-        //Values for email and password entered by the user
+        //Values for email, password, first name and last name entered by the user
         mEmail = findViewById(R.id.newEmail);
         mPassword = findViewById(R.id.newPassword);
+        mFirstName = findViewById(R.id.userFirstName);
+        mLastName = findViewById(R.id.userLastName);
 
         //Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -45,9 +54,9 @@ public class NewUser extends AppCompatActivity {
         final CharSequence text = "User Created!";
         final int duration = Toast.LENGTH_SHORT;
 
-        //Toast values for unsuccessful sing-up
+        //Toast values for unsuccessful sign-up
         final Context context2 = getApplicationContext();
-        final CharSequence text2 = "An Error Occurred..Please try again.";
+        final CharSequence text2 = "Error: Email already in use";
 
         //TODO: create button for user to cancel logging in on new user screen
         cancelButton = findViewById(R.id.cancelButton);
@@ -65,6 +74,8 @@ public class NewUser extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
+                String firstName = mFirstName.getText().toString().trim();
+                String lastName = mLastName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is required");
@@ -81,6 +92,18 @@ public class NewUser extends AppCompatActivity {
                     return;
                 }
 
+                if (TextUtils.isEmpty(firstName))
+                {
+                    mFirstName.setError("First Name required");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(lastName))
+                {
+                    mLastName.setError("Last Name required");
+                    return;
+                }
+
                 //Register user via Firebase
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -89,7 +112,23 @@ public class NewUser extends AppCompatActivity {
                             //Display message to user that login creation was successful
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
-                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            //Values for database storage in Firebase
+                            String userID = mAuth.getCurrentUser().getUid();
+                            String userEmail = mAuth.getCurrentUser().getEmail();
+                            String userFirstName = mFirstName.getText().toString();
+                            String userLastName = mLastName.getText().toString();
+
+                            //Database references for storage in Firebase
+                            DatabaseReference userDB = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+                            //HashMap for storing extra values in the DB
+                            Map newPost = new HashMap();
+                            newPost.put("Email", userEmail);
+                            newPost.put("First Name", userFirstName);
+                            newPost.put("Last Name", userLastName);
+
+                            userDB.setValue(newPost);
 
                             //Switch to search screen after successful login
                             Intent intent = new Intent(NewUser.this, SearchScreen.class);

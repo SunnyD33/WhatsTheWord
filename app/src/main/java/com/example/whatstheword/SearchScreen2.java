@@ -21,12 +21,12 @@ public class SearchScreen2 extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
+                exit();
             }
         });
     }
 
-    private void logout()
+    private void exit()
     {
         Intent intent = new Intent(SearchScreen2.this,MainActivity.class);
         startActivity(intent);

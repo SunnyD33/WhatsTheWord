@@ -14,5 +14,9 @@
     <string name="create_login">Create Login</string>
     <string name="cancel">Cancel</string>
     <string name="new_user3">Create New User</string>
+    <string name="newUserName">Enter Your First Name</string>
+    <string name="newUserName2">Enter your Last Name</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
 </resources>
 
