@@ -18,5 +18,6 @@
     <string name="newUserName2">Enter your Last Name</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
+    <string name="favorites">Favorites</string>
 </resources>
 
