@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Toast values for unsuccessful login
         final Context context2 = getApplicationContext();
-        final CharSequence text2 = "Authentication failed";
+        final CharSequence text2 = "Email or Password incorrect! Please try again!";
 
         //TODO: create button for skipping login and going to the search menu
         mSkipLoginButton = findViewById(R.id.skipLoginButton);

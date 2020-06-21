@@ -29,6 +29,7 @@
         android:layout_marginBottom="16dp"
         android:background="?attr/selectableItemBackground"
         android:text="@string/logout"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -38,10 +39,11 @@
         android:id="@+id/search_button"
         android:layout_width="250dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/roundedbutton"
         android:text="@string/search"
         android:textColor="@color/cardview_light_background"
+        android:onClick="requestApi"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -57,4 +59,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/whatsthewordlogo" />
+
+    <TextView
+        android:id="@+id/definitionBox"
+        android:layout_width="367dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="162dp"
+        android:layout_marginLeft="162dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="191dp"
+        android:layout_marginRight="191dp"
+        android:gravity="center_horizontal"
+        android:hint="@string/definition"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

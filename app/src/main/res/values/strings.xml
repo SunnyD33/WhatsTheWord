@@ -19,5 +19,7 @@
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
     <string name="favorites">Favorites</string>
+    <string name="home">Home</string>
+    <string name="definition">Definition Will Display Here</string>
 </resources>
 
