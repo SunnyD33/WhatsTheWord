@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,8 +37,8 @@ public class DictionaryRequest extends AsyncTask<String,Integer,String>
     }
 
     @Override
-    protected String doInBackground(String... params) {
-
+    protected String doInBackground(String... params)
+    {
         myUrl = params[0];
         try {
             URL url = new URL(myUrl);
@@ -70,6 +71,10 @@ public class DictionaryRequest extends AsyncTask<String,Integer,String>
 
         String definition;
 
+        //Toast values for unsuccessful search
+        final CharSequence text = "Unable to find word";
+        final int duration = Toast.LENGTH_SHORT;
+
         //TODO: Create JSON objects to be able to read and parse responses from Oxford API
         try
         {
@@ -95,6 +100,7 @@ public class DictionaryRequest extends AsyncTask<String,Integer,String>
         catch (JSONException e)
         {
             e.printStackTrace();
+            Toast.makeText(context,text,duration).show();
         }
     }
 }
