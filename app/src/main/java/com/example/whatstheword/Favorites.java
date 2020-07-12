@@ -42,9 +42,13 @@ public class Favorites extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.back_to_search_button:
-                //TODO: create layout for list of favorite words to go to on user click
                 Intent intent = new Intent(Favorites.this, SearchScreen.class);
                 startActivity(intent);
+                break;
+
+            case R.id.logoutButton:
+                Intent intent1 = new Intent(Favorites.this,MainActivity.class);
+                startActivity(intent1);
                 break;
 
             default:
