@@ -36,7 +36,7 @@ public class SearchScreen extends AppCompatActivity {
         add_favorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //logout();
+                addToFavorites();
             }
         });
     }
@@ -99,5 +99,11 @@ public class SearchScreen extends AppCompatActivity {
         //Switch to login screen
         Intent intent = new Intent(SearchScreen.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void addToFavorites() {
+        Favorites list = new Favorites();
+        list.favoritesList.add(enterWord.toString());
+        list.adapter.notifyDataSetChanged();
     }
 }
