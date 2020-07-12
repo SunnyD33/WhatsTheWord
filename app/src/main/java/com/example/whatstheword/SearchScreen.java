@@ -69,10 +69,16 @@ public class SearchScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.favorites:
                 //TODO: create layout for list of favorite words to go to on user click
-                return true;
+                Intent intent = new Intent(SearchScreen.this, Favorites.class);
+                startActivity(intent);
+                break;
 
             case R.id.logoutButton:
                 logout();
+                break;
+
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
