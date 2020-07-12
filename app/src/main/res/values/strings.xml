@@ -21,5 +21,6 @@
     <string name="favorites">Favorites</string>
     <string name="home">Home</string>
     <string name="definition">Definition Will Display Here</string>
+    <string name="add_to_favs">Add to favorites</string>
 </resources>
 

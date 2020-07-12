@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SearchScreen extends AppCompatActivity {
 
-    private Button logoutButton;
+    private Button add_favorites;
     private String url;
     public TextView defBox;
     public EditText enterWord;
@@ -32,11 +32,11 @@ public class SearchScreen extends AppCompatActivity {
         defBox = (TextView) findViewById(R.id.definitionBox);
         enterWord = (EditText) findViewById(R.id.search_bar);
 
-        logoutButton = (Button) findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        add_favorites = (Button) findViewById(R.id.add_to_favorites);
+        add_favorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
+                //logout();
             }
         });
     }
