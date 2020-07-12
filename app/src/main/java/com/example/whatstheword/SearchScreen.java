@@ -70,6 +70,9 @@ public class SearchScreen extends AppCompatActivity {
             case R.id.favorites:
                 //TODO: create layout for list of favorite words to go to on user click
                 return true;
+
+            case R.id.logoutButton:
+                logout();
         }
         return super.onOptionsItemSelected(item);
     }
