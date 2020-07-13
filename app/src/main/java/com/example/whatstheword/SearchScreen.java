@@ -103,7 +103,6 @@ public class SearchScreen extends AppCompatActivity {
 
     public void addToFavorites() {
         Favorites list = new Favorites();
-        list.favoritesList.add(enterWord.toString());
-        list.adapter.notifyDataSetChanged();
+        list.favoritesList.add(enterWord.getText().toString());
     }
 }
