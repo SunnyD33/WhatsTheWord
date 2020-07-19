@@ -5,23 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Favorites extends AppCompatActivity {
 
@@ -29,17 +29,51 @@ public class Favorites extends AppCompatActivity {
     public ArrayAdapter<String> adapter;
     public ListView lv;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference ref;
+    private String userID = mAuth.getCurrentUser().getUid();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites_list);
 
-        lv = findViewById(R.id.favorites_list);
+        ref = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Favorites");
+
+        lv = (ListView) findViewById(R.id.favorites_list);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,favoritesList);
         lv.setAdapter(adapter);
-        Collections.sort(favoritesList);
-        adapter.notifyDataSetChanged();
+
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String value = dataSnapshot.getValue(String.class);
+                favoritesList.add(value);
+                Collections.sort(favoritesList);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     @Override
