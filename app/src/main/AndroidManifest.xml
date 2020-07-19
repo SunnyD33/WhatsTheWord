@@ -10,9 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchScreen"/>
-        <activity android:name=".SearchScreen2"/>
-        <activity android:name=".NewUser"/>
+        <activity android:name=".SearchScreen"
+                  android:label="@string/search"/>
+        <activity android:name=".SearchScreen2"
+                  android:label="@string/search"/>
+        <activity android:name=".NewUser"
+                  android:label="@string/new_user3"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
