@@ -7,27 +7,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Favorites extends AppCompatActivity {
 
+    public ArrayList<String> favoritesList = new ArrayList<>();
+    public ArrayAdapter adapter;
     public ListView lv;
-    public ArrayList<String> favoritesList = new ArrayList<String>();
-    public ArrayAdapter<String> adapter;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites_list);
 
-        lv = (ListView) findViewById(R.id.favorites_list);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,favoritesList);
+        lv = findViewById(R.id.favorites_list);
+        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,favoritesList);
         lv.setAdapter(adapter);
-        favoritesList.add("absent");
+        Collections.sort(favoritesList);
         adapter.notifyDataSetChanged();
     }
 
@@ -55,5 +61,10 @@ public class Favorites extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addWord(String word)
+    {
+        favoritesList.add(word);
     }
 }

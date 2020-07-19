@@ -2,17 +2,24 @@ package com.example.whatstheword;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +30,9 @@ public class SearchScreen extends AppCompatActivity {
     private String url;
     public TextView defBox;
     public EditText enterWord;
+    public ListView lv;
+    public ArrayAdapter<String> adapter;
+    private String favoriteWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +111,18 @@ public class SearchScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void addToFavorites() {
         Favorites list = new Favorites();
-        list.favoritesList.add(enterWord.getText().toString());
+        favoriteWord = enterWord.getText().toString();
+
+        if(!favoriteWord.isEmpty()) {
+            list.addWord(favoriteWord);
+            Toast.makeText(this,"'" +favoriteWord + "'" + " added to Favorites",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this,"Please enter a word", Toast.LENGTH_SHORT).show();
+        }
     }
 }
