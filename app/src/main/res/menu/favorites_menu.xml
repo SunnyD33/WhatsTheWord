@@ -4,6 +4,9 @@
     <item android:id="@+id/back_to_search_button"
         android:title="@string/return_to_search"/>
 
+    <item android:id="@+id/refresh_button"
+        android:title="@string/refresh"/>
+
     <item android:id="@+id/logoutButton"
         android:title="@string/logout"/>
 </menu>

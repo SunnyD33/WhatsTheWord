@@ -23,6 +23,7 @@
     <string name="definition">Definition Will Display Here</string>
     <string name="add_to_favs">Add to favorites</string>
     <string name="return_to_search">Back To Lookup</string>
+    <string name="refresh">Refresh</string>
 
     <string-array name="longClickMenu">
         <item>Delete</item>

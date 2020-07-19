@@ -129,6 +129,11 @@ public class Favorites extends AppCompatActivity {
                 startActivity(intent1);
                 break;
 
+            case R.id.refresh_button:
+                finish();
+                startActivity(getIntent());
+                break;
+
             default:
                 break;
         }
