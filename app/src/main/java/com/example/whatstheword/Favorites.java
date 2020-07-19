@@ -2,14 +2,19 @@ package com.example.whatstheword;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,12 +47,14 @@ public class Favorites extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.favorites_list);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,favoritesList);
         lv.setAdapter(adapter);
+        lv.setClickable(true);
+        registerForContextMenu(lv);
 
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 String value = dataSnapshot.getValue(String.class);
-                favoritesList.add(value);
+                favoritesList.add(value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase());
                 Collections.sort(favoritesList);
                 adapter.notifyDataSetChanged();
             }
@@ -59,7 +66,10 @@ public class Favorites extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                String value = dataSnapshot.getValue(String.class);
+                favoritesList.remove(value);
+                Collections.sort(favoritesList);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -73,7 +83,30 @@ public class Favorites extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if(v.getId() == R.id.favorites_list)
+        {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            menu.setHeaderTitle("Options");
+            String[] items = getResources().getStringArray(R.array.longClickMenu);
+            for(int i = 0; i < items.length; i++)
+            {
+                menu.add(Menu.NONE, i, i, items[i]);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int itemIndex = item.getItemId();
+        String[] items = getResources().getStringArray(R.array.longClickMenu);
+        String menuItemName = items[itemIndex];
+        String itemName = "Delete?";
+        return true;
     }
 
     @Override
@@ -107,6 +140,6 @@ public class Favorites extends AppCompatActivity {
         String userID = mAuth.getCurrentUser().getUid();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference myRef = db.getReference().child("Users").child(userID).child("Favorites");
-        myRef.push().setValue(word);
+        myRef.push().setValue(word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase());
     }
 }
