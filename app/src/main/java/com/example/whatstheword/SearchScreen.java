@@ -30,8 +30,6 @@ public class SearchScreen extends AppCompatActivity {
     private String url;
     public TextView defBox;
     public EditText enterWord;
-    public ListView lv;
-    public ArrayAdapter<String> adapter;
     private String favoriteWord;
 
     @Override
