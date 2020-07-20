@@ -36,10 +36,23 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:id="@+id/clear_button"
+        android:layout_width="70dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="136dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/clear"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/search_button"
         android:layout_width="250dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="140dp"
         android:background="@drawable/roundedbutton"
         android:onClick="requestApi"
         android:text="@string/search"

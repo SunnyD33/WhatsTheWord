@@ -31,6 +31,7 @@ public class SearchScreen extends AppCompatActivity {
     public TextView defBox;
     public EditText enterWord;
     private String favoriteWord;
+    private Button clear_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,14 @@ public class SearchScreen extends AppCompatActivity {
 
         defBox = (TextView) findViewById(R.id.definitionBox);
         enterWord = (EditText) findViewById(R.id.search_bar);
+
+        clear_button = (Button) findViewById(R.id.clear_button);
+        clear_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clear();
+            }
+        });
 
         add_favorites = (Button) findViewById(R.id.add_to_favorites);
         add_favorites.setOnClickListener(new View.OnClickListener() {
@@ -116,11 +125,21 @@ public class SearchScreen extends AppCompatActivity {
 
         if(!favoriteWord.isEmpty()) {
             list.addWord(favoriteWord);
-            Toast.makeText(this,"'" +favoriteWord + "'" + " added to Favorites",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"'" +favoriteWord.substring(0,1).toUpperCase() + favoriteWord.substring(1).toLowerCase() + "'" + " added to Favorites",Toast.LENGTH_SHORT).show();
         }
         else
         {
             Toast.makeText(this,"Please enter a word", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void clear()
+    {
+        if(enterWord != null)
+        {
+            enterWord.setText("");
+            defBox.setText("");
+            Toast.makeText(this, "Cleared",Toast.LENGTH_SHORT).show();
         }
     }
 }
