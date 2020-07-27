@@ -23,6 +23,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchScreen extends AppCompatActivity {
 
@@ -32,6 +37,8 @@ public class SearchScreen extends AppCompatActivity {
     public EditText enterWord;
     private String favoriteWord;
     private Button clear_button;
+    private String definition;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,10 +129,16 @@ public class SearchScreen extends AppCompatActivity {
     public void addToFavorites() {
         Favorites list = new Favorites();
         favoriteWord = enterWord.getText().toString();
+        definition = defBox.getText().toString();
 
         if(!favoriteWord.isEmpty()) {
-            list.addWord(favoriteWord);
+            String userID = mAuth.getCurrentUser().getUid();
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            final DatabaseReference myRef = db.getReference().child("Users").child(userID).child("Favorites");
+            //final DatabaseReference myRef2 = db.getReference().child("Users").child(userID);
+            myRef.push().setValue(favoriteWord.substring(0,1).toUpperCase() + favoriteWord.substring(1).toLowerCase());
             Toast.makeText(this,"'" +favoriteWord.substring(0,1).toUpperCase() + favoriteWord.substring(1).toLowerCase() + "'" + " added to Favorites",Toast.LENGTH_SHORT).show();
+
         }
         else
         {
@@ -135,7 +148,10 @@ public class SearchScreen extends AppCompatActivity {
 
     public void clear()
     {
-        if(enterWord != null)
+        String wordToBeCleared;
+        wordToBeCleared = enterWord.getText().toString();
+
+        if(!wordToBeCleared.isEmpty())
         {
             enterWord.setText("");
             defBox.setText("");

@@ -1,5 +1,6 @@
 package com.example.whatstheword;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +25,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Favorites extends AppCompatActivity {
@@ -36,6 +41,7 @@ public class Favorites extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference ref;
     private String userID = mAuth.getCurrentUser().getUid();
+    private Context mContext = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +59,8 @@ public class Favorites extends AppCompatActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String value = dataSnapshot.getValue(String.class);
-                favoritesList.add(value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase());
+                String word = dataSnapshot.getValue(String.class);
+                favoritesList.add(word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase());
                 Collections.sort(favoritesList);
                 adapter.notifyDataSetChanged();
             }
@@ -140,11 +146,27 @@ public class Favorites extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addWord(String word)
+    /*public void addWord(final String word, final String definition)
     {
         String userID = mAuth.getCurrentUser().getUid();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = db.getReference().child("Users").child(userID).child("Favorites");
+        final DatabaseReference myRef = db.getReference().child("Users").child(userID).child("Favorites");
+        final DatabaseReference myRef2 = db.getReference().child("Users").child(userID);
         myRef.push().setValue(word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase());
-    }
+
+        myRef.orderByChild("Favorites").equalTo(word).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                    Toast.makeText(Favorites.this,"Word already saved",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }*/
 }
