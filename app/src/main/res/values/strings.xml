@@ -25,6 +25,7 @@
     <string name="return_to_search">Back To Lookup</string>
     <string name="refresh">Refresh</string>
     <string name="clear">Clear</string>
+    <string name="delete">Delete</string>
 
     <string-array name="longClickMenu">
         <item>Delete</item>

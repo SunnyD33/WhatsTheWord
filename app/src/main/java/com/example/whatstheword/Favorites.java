@@ -92,30 +92,6 @@ public class Favorites extends AppCompatActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if(v.getId() == R.id.favorites_list)
-        {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            menu.setHeaderTitle("Options");
-            String[] items = getResources().getStringArray(R.array.longClickMenu);
-            for(int i = 0; i < items.length; i++)
-            {
-                menu.add(Menu.NONE, i, i, items[i]);
-            }
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int itemIndex = item.getItemId();
-        String[] items = getResources().getStringArray(R.array.longClickMenu);
-        String menuItemName = items[itemIndex];
-        String itemName = "Delete?";
-        return true;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.favorites_menu,menu);
@@ -144,6 +120,26 @@ public class Favorites extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Options");
+        getMenuInflater().inflate(R.menu.favorites_context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId())
+        {
+            case R.id.delete_button:
+                adapter.remove(adapter.getItem(info.position));
+                break;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     /*public void addWord(final String word, final String definition)
