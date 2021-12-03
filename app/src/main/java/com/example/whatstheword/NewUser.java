@@ -1,9 +1,14 @@
 package com.example.whatstheword;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +45,8 @@ public class NewUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
+        getSupportActionBar().setTitle("Create New User");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Values for email, password, first name and last name entered by the user
         mEmail = findViewById(R.id.newEmail);
@@ -57,15 +65,6 @@ public class NewUser extends AppCompatActivity {
         //Toast values for unsuccessful sign-up
         final Context context2 = getApplicationContext();
         final CharSequence text2 = "Error: Email already in use";
-
-        //TODO: create button for user to cancel logging in on new user screen
-        cancelButton = findViewById(R.id.cancelButton);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CancelLoginCreate();
-            }
-        });
 
         //TODO: create button for user to create new credentials
         mCreateLoginButton = findViewById(R.id.createLoginButton);
@@ -154,9 +153,56 @@ public class NewUser extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
     }
 
-    private void CancelLoginCreate() {
-        //Return user to login screen without creating credentials
-        Intent intent = new Intent(NewUser.this, MainActivity.class);
-        startActivity(intent);
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onBackPressed() {
+        AlertDialog cancelDialog = new AlertDialog.Builder(this)
+                .setTitle("Cancel")
+                .setMessage("Are you sure?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(NewUser.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                })
+                .show();
+        cancelDialog.create();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            AlertDialog cancelDialog = new AlertDialog.Builder(this)
+                    .setTitle("Cancel")
+                    .setMessage("Are you sure?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(NewUser.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .show();
+            cancelDialog.create();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
