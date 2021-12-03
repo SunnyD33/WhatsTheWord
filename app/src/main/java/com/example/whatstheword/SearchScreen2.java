@@ -20,17 +20,11 @@ public class SearchScreen2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen_2);
+        getSupportActionBar().setTitle("Lookup");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         defBox = (TextView) findViewById(R.id.definitionBox2);
         enterWord = (EditText) findViewById(R.id.search_bar2);
-
-        homeButton = (Button) findViewById(R.id.homeButton);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exit();
-            }
-        });
     }
 
     public void requestApi(View v)

@@ -31,14 +31,6 @@ public class SearchScreen extends AppCompatActivity {
 
         defBox = (TextView) findViewById(R.id.definitionBox);
         enterWord = (EditText) findViewById(R.id.search_bar);
-
-        logoutButton = (Button) findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
     }
 
     public void requestApi(View v)
