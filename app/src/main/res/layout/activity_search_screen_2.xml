@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".SearchScreen2">
 
 
@@ -20,6 +22,9 @@
         android:hint="@string/search"
         android:inputType="textPersonName"
         android:textAlignment="center"
+        android:imeOptions="actionDone"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchScreen2Logo" />

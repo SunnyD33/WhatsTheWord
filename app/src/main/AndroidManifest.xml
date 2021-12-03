@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SearchScreen"/>
-        <activity android:name=".SearchScreen2"/>
+        <activity android:name=".SearchScreen2"
+            android:windowSoftInputMode="stateVisible" />
         <activity android:name=".NewUser"/>
         <activity android:name=".MainActivity">
             <intent-filter>
