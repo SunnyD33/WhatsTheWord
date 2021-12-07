@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     //Private variables
-    private Button mSkipLoginButton;
+    private TextView mSkipLoginButton;
     private Button mNewUserButton;
     private Button mLoginButton;
     private EditText mEmail;

@@ -3,6 +3,7 @@ package com.example.whatstheword;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 public class SearchScreen2 extends AppCompatActivity {
 
-    private Button homeButton;
+    private Button clearButton;
     private String url;
     public TextView defBox;
     public EditText enterWord;
@@ -26,13 +29,14 @@ public class SearchScreen2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen_2);
-        getSupportActionBar().setTitle("Lookup");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Quick Lookup");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         defBox = (TextView) findViewById(R.id.definitionBox2);
         enterWord = (EditText) findViewById(R.id.search_bar2);
-        enterWord.requestFocus();
+        clearButton = findViewById(R.id.search2ClearButton);
 
+        enterWord.requestFocus();
         enterWord.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -45,6 +49,17 @@ public class SearchScreen2 extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                enterWord.setText("");
+                enterWord.requestFocus();
+                defBox.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(enterWord,InputMethodManager.SHOW_IMPLICIT);
             }
         });
     }
