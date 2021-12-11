@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -19,11 +20,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
-    //Private variables
-    private Button mSkipLoginButton;
-    private Button mNewUserButton;
-    private Button mLoginButton;
     private EditText mEmail;
     private EditText mPassword;
     private FirebaseAuth mAuth;
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         final CharSequence text2 = "Email or Password incorrect! Please try again!";
 
         //TODO: create button for skipping login and going to the search menu
-        mSkipLoginButton = findViewById(R.id.skipLoginButton);
+        //Private variables
+        Button mSkipLoginButton = findViewById(R.id.skipLoginButton);
         mSkipLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //TODO: create button for a new user to create credentials for the application
-        mNewUserButton = findViewById(R.id.newUserButton);
+        Button mNewUserButton = findViewById(R.id.newUserButton);
         mNewUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //TODO: create button for user to login with credentials
-        mLoginButton = findViewById(R.id.loginButton);
+        Button mLoginButton = findViewById(R.id.loginButton);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             //Take user to search screen
                             Intent intent = new Intent(MainActivity.this, SearchScreen.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             //Unsuccessful login message
                             Toast toast = Toast.makeText(context2, text2, duration);
@@ -122,12 +124,14 @@ public class MainActivity extends AppCompatActivity {
     private void skipLogin() {
         Intent intent = new Intent(MainActivity.this, SearchScreen2.class);
         startActivity(intent);
+        finish();
     }
 
     //TODO: Create function to have user create credentials
     private void newUserLogin() {
         Intent intent = new Intent(MainActivity.this, NewUser.class);
         startActivity(intent);
+        finish();
     }
 
 }
