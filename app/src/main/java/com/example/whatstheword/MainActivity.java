@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: create button for skipping login and going to the search menu
         //Private variables
-        Button mSkipLoginButton = findViewById(R.id.skipLoginButton);
+        TextView mSkipLoginButton = findViewById(R.id.skipLoginButton);
         mSkipLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
