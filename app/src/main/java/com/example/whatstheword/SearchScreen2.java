@@ -67,18 +67,11 @@ public class SearchScreen2 extends AppCompatActivity {
     public void requestApi(View v)
     {
         DictionaryRequest request = new DictionaryRequest(this,defBox);
-        url = dictionaryEntries();
+        DictionaryApi dictionaryApi = new DictionaryApi();
+        url = dictionaryApi.dictionaryEntries(enterWord.getText().toString());
         request.execute(url);
     }
 
-    private String dictionaryEntries() {
-        final String language = "en-gb";
-        final String word = enterWord.getText().toString();
-        final String fields = "definitions";
-        final String strictMatch = "false";
-        final String word_id = word.toLowerCase();
-        return "https://od-api.oxforddictionaries.com:443/api/v2/entries/" + language + "/" + word_id + "?" + "fields=" + fields + "&strictMatch=" + strictMatch;
-    }
 
     @Override
     public void onBackPressed() {
