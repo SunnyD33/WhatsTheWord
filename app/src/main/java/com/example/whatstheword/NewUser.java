@@ -29,23 +29,21 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class NewUser extends AppCompatActivity {
 
-    private Button cancelButton;
-    private Button mCreateLoginButton;
     private EditText mEmail;
     private EditText mPassword;
     private EditText mFirstName;
     private EditText mLastName;
     private FirebaseAuth mAuth;
-    private ProgressBar progressBar; //To be added
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
-        getSupportActionBar().setTitle("Create New User");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Create New User");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Values for email, password, first name and last name entered by the user
@@ -57,17 +55,8 @@ public class NewUser extends AppCompatActivity {
         //Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        //Toast values for successful sign-up
-        final Context context = getApplicationContext();
-        final CharSequence text = "User Created!";
-        final int duration = Toast.LENGTH_SHORT;
-
-        //Toast values for unsuccessful sign-up
-        final Context context2 = getApplicationContext();
-        final CharSequence text2 = "Error: Email already in use";
-
         //TODO: create button for user to create new credentials
-        mCreateLoginButton = findViewById(R.id.createLoginButton);
+        Button mCreateLoginButton = findViewById(R.id.createLoginButton);
         mCreateLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +98,7 @@ public class NewUser extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //Display message to user that login creation was successful
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
+                            Toast.makeText(getApplicationContext(), "User Created!", Toast.LENGTH_SHORT).show();;
 
                             //Values for database storage in Firebase
                             String userID = mAuth.getCurrentUser().getUid();
@@ -132,12 +120,12 @@ public class NewUser extends AppCompatActivity {
                             //Switch to search screen after successful login
                             Intent intent = new Intent(NewUser.this, SearchScreen.class);
                             startActivity(intent);
+                            finish();
                         }
                         else
                         {
                             //Display error message indicating login was unsuccessful
-                            Toast toast = Toast.makeText(context2, text2, duration);
-                            toast.show();
+                            Toast.makeText(getApplicationContext(), "Error: Email already in use", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

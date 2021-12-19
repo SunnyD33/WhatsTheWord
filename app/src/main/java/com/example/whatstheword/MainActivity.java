@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
     private FirebaseAuth mAuth;
-    private ProgressBar progressBar; //To be added
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +40,6 @@ public class MainActivity extends AppCompatActivity {
         //Set values for email and password from xml layouts
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
-
-        //Toast values for successful login
-        final Context context = getApplicationContext();
-        final CharSequence text = "Signing in";
-        final int duration = Toast.LENGTH_SHORT;
-
-        //Toast values for unsuccessful login
-        final Context context2 = getApplicationContext();
-        final CharSequence text2 = "Email or Password incorrect! Please try again!";
 
         //TODO: create button for skipping login and going to the search menu
         //Private variables
@@ -95,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //Successful sign in message
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
+                            Toast.makeText(getApplicationContext(), "Signing in..", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             //Take user to search screen
@@ -105,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                             finish();
                         } else {
                             //Unsuccessful login message
-                            Toast toast = Toast.makeText(context2, text2, duration);
-                            toast.show();
+                            Toast.makeText(getApplicationContext(), "Email or Password incorrect! Please try again!", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
