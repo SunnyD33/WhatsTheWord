@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class SearchScreen extends AppCompatActivity {
 
     private Button clearButton;
@@ -31,6 +33,8 @@ public class SearchScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Lookup");
 
         defBox = (TextView) findViewById(R.id.definitionBox);
         enterWord = (EditText) findViewById(R.id.search_bar);
@@ -73,6 +77,12 @@ public class SearchScreen extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SearchScreen.this,MainActivity.class));
+        finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
@@ -81,10 +91,10 @@ public class SearchScreen extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.favorites:
-                //TODO: create layout for list of favorite words to go to on user click
-                return true;
+        if(item.getItemId() == android.R.id.home) {
+            startActivity(new Intent(SearchScreen.this,MainActivity.class));
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
