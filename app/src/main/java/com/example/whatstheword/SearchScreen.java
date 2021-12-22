@@ -92,28 +92,23 @@ public class SearchScreen extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
-            startActivity(new Intent(SearchScreen.this,MainActivity.class));
-            finish();
+            logout();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void logout() {
-        //Toast values for user logout
-        final Context context = getApplicationContext();
-        final CharSequence text = "Logging out";
-        final int duration = Toast.LENGTH_SHORT;
 
         //Sign user out of Firebase
         FirebaseAuth.getInstance().signOut();
 
         //Display message to user that they have logged out
-        Toast toast = Toast.makeText(context,text,duration);
-        toast.show();
+        Toast.makeText(getApplicationContext(),"logging out..",Toast.LENGTH_SHORT).show();
 
         //Switch to login screen
         Intent intent = new Intent(SearchScreen.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }
