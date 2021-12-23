@@ -1,7 +1,9 @@
 package com.example.whatstheword;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,8 +27,6 @@ import java.util.Objects;
 
 public class SearchScreen extends AppCompatActivity {
 
-    private Button clearButton;
-    private String url;
     public TextView defBox;
     public EditText enterWord;
 
@@ -38,7 +39,7 @@ public class SearchScreen extends AppCompatActivity {
 
         defBox = (TextView) findViewById(R.id.definitionBox);
         enterWord = (EditText) findViewById(R.id.search_bar);
-        clearButton = findViewById(R.id.search1ClearButton);
+        Button clearButton = findViewById(R.id.search1ClearButton);
 
         enterWord.requestFocus();
         enterWord.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -72,14 +73,13 @@ public class SearchScreen extends AppCompatActivity {
     {
         DictionaryRequest request = new DictionaryRequest(this,defBox);
         DictionaryApi dictionaryApi = new DictionaryApi();
-        url = dictionaryApi.dictionaryEntries(enterWord.getText().toString());
+        String url = dictionaryApi.dictionaryEntries(enterWord.getText().toString());
         request.execute(url);
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SearchScreen.this,MainActivity.class));
-        finish();
+        logout();
     }
 
     @Override
@@ -100,15 +100,37 @@ public class SearchScreen extends AppCompatActivity {
 
     private void logout() {
 
-        //Sign user out of Firebase
-        FirebaseAuth.getInstance().signOut();
+        AlertDialog logoutDialog = new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure?\nYou will need to log back in.")
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Sign user out of Firebase
+                        FirebaseAuth.getInstance().signOut();
 
-        //Display message to user that they have logged out
-        Toast.makeText(getApplicationContext(),"logging out..",Toast.LENGTH_SHORT).show();
+                        //Display message to user that they have logged out
+                        Toast.makeText(getApplicationContext(),"Logging out..",Toast.LENGTH_SHORT).show();
 
-        //Switch to login screen
-        Intent intent = new Intent(SearchScreen.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+                        //Switch to login screen
+                        Intent intent = new Intent(SearchScreen.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).create();
+        logoutDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                logoutDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(Color.RED);
+            }
+        });
+        logoutDialog.show();
+
     }
 }
