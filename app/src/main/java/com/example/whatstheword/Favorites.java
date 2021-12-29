@@ -15,25 +15,21 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Objects;
 
 public class Favorites extends AppCompatActivity {
 
     public ArrayList<String> favList = new ArrayList<>();
-    public FirebaseAuth user;
+    public ListView listView;
+    public ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,11 +38,14 @@ public class Favorites extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("Favorites");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ListView listView = findViewById(R.id.favoritesList);
+        listView = findViewById(R.id.favoritesList);
         listView.setClickable(true);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favList);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favList);
         listView.setAdapter(adapter);
+    }
 
+    @Override
+    protected void onStart() {
         String currentUser = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference favRef = dbRef.child("Users").child(currentUser).child("Favorites");
@@ -88,7 +87,7 @@ public class Favorites extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),listView.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
             }
         });
-
+        super.onStart();
     }
 
     @Override
