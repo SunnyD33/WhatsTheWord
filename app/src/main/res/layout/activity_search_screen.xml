@@ -60,15 +60,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="157dp"
         android:layout_marginLeft="157dp"
-        android:layout_marginTop="93dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="166dp"
         android:layout_marginRight="166dp"
         android:layout_marginBottom="94dp"
-        android:text="Clear"
         android:background="@drawable/roundedbutton"
+        android:text="Clear"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/definitionBox" />
+        app:layout_constraintTop_toBottomOf="@+id/definitionBox"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

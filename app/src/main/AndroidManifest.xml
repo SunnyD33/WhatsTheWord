@@ -14,6 +14,7 @@
         <activity android:name=".SearchScreen2"
             android:windowSoftInputMode="stateVisible" />
         <activity android:name=".NewUser"/>
+        <activity android:name=".Favorites"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
