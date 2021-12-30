@@ -67,7 +67,11 @@ public class Favorites extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                String value = dataSnapshot.getValue(String.class);
+                favList.remove(value);
+                Collections.sort(favList);
+                Log.d("Favorites", favList.toString());
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -77,7 +81,7 @@ public class Favorites extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 

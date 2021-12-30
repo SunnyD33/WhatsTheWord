@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.29791666666666666" />
         <entry key="app/src/main/res/drawable/roundedbutton.xml" value="0.32314814814814813" />
         <entry key="app/src/main/res/layout/activity_favorites_list.xml" value="0.23353596757852077" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
