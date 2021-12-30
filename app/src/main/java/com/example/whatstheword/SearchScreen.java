@@ -110,6 +110,11 @@ public class SearchScreen extends AppCompatActivity {
                     imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
                     enterWord.clearFocus();
 
+                    MenuItem favoritesMenuItem = favoritesMenu.findItem(R.id.setFavorite);
+                    favoritesMenuItem.setIcon(R.drawable.ic_baseline_star_outline_24);
+
+
+
                     favRef.addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -147,7 +152,7 @@ public class SearchScreen extends AppCompatActivity {
                         String word = enterWord.getText().toString();
                         if (word != null) {
                             if ((word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase()).equals(currentFavorites.get(j))) {
-                                MenuItem favoritesMenuItem = favoritesMenu.findItem(R.id.setFavorite);
+                                favoritesMenuItem = favoritesMenu.findItem(R.id.setFavorite);
                                 //Drawable drawable = favoritesMenuItem.getIcon().mutate();
                                 favoritesMenuItem.setIcon(R.drawable.ic_baseline_star_24);
                                 isFavorite = true;
