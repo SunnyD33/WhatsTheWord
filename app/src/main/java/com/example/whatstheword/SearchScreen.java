@@ -1,13 +1,9 @@
 package com.example.whatstheword;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -44,8 +41,6 @@ import java.util.Objects;
 
 public class SearchScreen extends AppCompatActivity {
 
-    private Button clearButton;
-    private String url;
     public TextView defBox;
     public EditText enterWord;
     public Menu favoritesMenu;
@@ -65,7 +60,7 @@ public class SearchScreen extends AppCompatActivity {
 
         defBox = (TextView) findViewById(R.id.definitionBox);
         enterWord = (EditText) findViewById(R.id.search_bar);
-        clearButton = findViewById(R.id.search1ClearButton);
+        Button clearButton = findViewById(R.id.search1ClearButton);
 
         favRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -191,14 +186,13 @@ public class SearchScreen extends AppCompatActivity {
     public void requestApi(View v) {
         DictionaryRequest request = new DictionaryRequest(this, defBox);
         DictionaryApi dictionaryApi = new DictionaryApi();
-        url = dictionaryApi.dictionaryEntries(enterWord.getText().toString());
+        String url = dictionaryApi.dictionaryEntries(enterWord.getText().toString());
         request.execute(url);
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SearchScreen.this, MainActivity.class));
-        finish();
+        logout();
     }
 
     @Override
@@ -212,9 +206,8 @@ public class SearchScreen extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            startActivity(new Intent(SearchScreen.this, MainActivity.class));
-            finish();
+        if(item.getItemId() == android.R.id.home) {
+            logout();
             return true;
         }
 
@@ -273,20 +266,38 @@ public class SearchScreen extends AppCompatActivity {
     }
 
     private void logout() {
-        //Toast values for user logout
-        final Context context = getApplicationContext();
-        final CharSequence text = "Logging out";
-        final int duration = Toast.LENGTH_SHORT;
 
-        //Sign user out of Firebase
-        FirebaseAuth.getInstance().signOut();
+        AlertDialog logoutDialog = new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure?\nYou will need to log back in.")
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Sign user out of Firebase
+                        FirebaseAuth.getInstance().signOut();
 
-        //Display message to user that they have logged out
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+                        //Display message to user that they have logged out
+                        Toast.makeText(getApplicationContext(),"Logging out..",Toast.LENGTH_SHORT).show();
 
-        //Switch to login screen
-        Intent intent = new Intent(SearchScreen.this, MainActivity.class);
-        startActivity(intent);
+                        //Switch to login screen
+                        Intent intent = new Intent(SearchScreen.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).create();
+        logoutDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                logoutDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(Color.RED);
+            }
+        });
+        logoutDialog.show();
+
     }
 }

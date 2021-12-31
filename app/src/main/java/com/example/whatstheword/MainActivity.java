@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //Successful sign in message
                             Toast.makeText(getApplicationContext(), "Signing in..", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            //FirebaseUser user = mAuth.getCurrentUser();
 
                             //Take user to search screen
                             Intent intent = new Intent(MainActivity.this, SearchScreen.class);
@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         //Check if user is signed in
         FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null) {
+            startActivity(new Intent(MainActivity.this, SearchScreen.class));
+            finish();
+        }
     }
 
     //TODO: Create function to have user login without credentials
