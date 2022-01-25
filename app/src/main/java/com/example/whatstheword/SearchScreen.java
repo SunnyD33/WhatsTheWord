@@ -218,7 +218,7 @@ public class SearchScreen extends AppCompatActivity {
         if (item.getItemId() == R.id.setFavorite) {
 
             //Check that user cannot save a favorite if there is no text in search field
-            if (!enterWord.getText().toString().equals("")) {
+            if (!enterWord.getText().toString().equals("") && !defBox.getText().toString().equals("")) {
 
                 if (!isFavorite) {
                     isFavorite = true;
@@ -233,7 +233,7 @@ public class SearchScreen extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Please enter a word to save", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You will need to complete a search for a word first", Toast.LENGTH_SHORT).show();
             }
             return true;
         }

@@ -7,11 +7,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,8 @@ public class Favorites extends AppCompatActivity {
     public ArrayList<String> favList = new ArrayList<>();
     public ListView listView;
     public ArrayAdapter<String> adapter;
+    public String selectedWord;
+    public String wordDef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +46,14 @@ public class Favorites extends AppCompatActivity {
         listView.setClickable(true);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favList);
         listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),listView.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -84,13 +96,6 @@ public class Favorites extends AppCompatActivity {
                 throw databaseError.toException();
             }
         });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),listView.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
         super.onStart();
     }
 
@@ -98,6 +103,18 @@ public class Favorites extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(Favorites.this,SearchScreen.class));
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        favList.clear();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        favList.clear();
+        super.onStop();
     }
 
     @Override
