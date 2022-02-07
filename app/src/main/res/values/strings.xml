@@ -24,5 +24,6 @@
     <string name="quick_search">QUICK LOOKUP</string>
     <string name="add_to_favorites">Add To Favorites</string>
     <string name="add_to_favorite">Add To Favorite</string>
+    <string name="clear">Clear</string>
 </resources>
 

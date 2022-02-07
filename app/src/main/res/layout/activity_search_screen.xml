@@ -12,19 +12,18 @@
     <EditText
         android:id="@+id/search_bar"
         android:layout_width="325dp"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_marginTop="77dp"
-        android:drawableStart="@drawable/ic_action_search"
-        android:drawableLeft="@drawable/ic_action_search"
+        android:ellipsize="start"
         android:ems="10"
-        android:gravity="center_horizontal"
         android:hint="@string/search"
         android:inputType="text"
-        android:textAlignment="center"
         android:imeOptions="actionDone"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchScreenLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/searchScreenLogo"
+        android:gravity="center_horizontal" />
 
     <ImageView
         android:id="@+id/searchScreenLogo"
@@ -58,21 +57,19 @@
         android:id="@+id/search1ClearButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginStart="157dp"
-        android:layout_marginLeft="157dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="166dp"
-        android:layout_marginRight="166dp"
-        android:layout_marginBottom="94dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="171dp"
+        android:layout_marginRight="171dp"
+        android:layout_marginBottom="172dp"
         android:background="@drawable/roundedbutton"
-        android:text="Clear"
+        android:gravity="center"
+        android:text="@string/clear"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/definitionBox"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/definitionBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
